@@ -1,2 +1,2 @@
 # Triton-Symbolic
-Symbolic Execute of Triton Malware in ANGR
+Symbolic Execution of Triton Malware in ANGR
