@@ -19,10 +19,24 @@ def load_bins(inject, imain):
     return BytesIO(data)
 
 BASE = 0x10000000
-START = BASE+0x678
+
+
+#added for syscall number tracing in the 0x1000000
+#START = BASE
+
+#MainRoutine in inject.bin
+#START = BASE+0x678
+
+
+#imain mainroutine
+START = BASE+0x844
+
+
+#imain END
+END = BASE+0x894
 
 # case 1
-END = BASE+0x6e4
+#END = BASE+0x6e4
 
 # case 2
 #END = BASE+0x6f8
@@ -36,11 +50,19 @@ END = BASE+0x6e4
 # case 5
 #END = BASE+0x748
 
+#check syscall 
+#END = BASE+0x498
 
 
+#check second syscall in case2
+#END = BASE+0x24
+
+
+#check third syscall
+#END = BASE+0x8
 
 addrs = set()
-merged_payload = load_bins('../bin/inject.bin', '../bin/imain.bin')
+merged_payload = load_bins('../Tribin/inject.bin', '../Tribin/imain.bin')
 loader = cle.loader.Loader(merged_payload, main_opts={
         'backend': 'blob',
         'custom_arch': archinfo.arch_ppc32.ArchPPC32(endness="Iend_BE"),
@@ -55,11 +77,27 @@ def mem_read_hook(s):
     if not addr.concrete:
         return
     addr = addr.args[0]
-    if (addr&0x7ffe0000) != 0x7ffe0000:
+    if True or (addr&0x7ffe0000) != 0x7ffe0000:
         addrs.add(addr)
         ins_addr = s.regs.ip.args[0]
         inst = proj.factory.block(addr=ins_addr).capstone.insns[0]
         print 'Read addr=0x{:x}, value={}\t{}'.format(addr, 
+                s.inspect.mem_read_expr, inst)
+
+    if  addr == 0x199400:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_read_expr, inst)
+
+    if  addr == 0x19AC68:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_read_expr, inst)
+
+    if  addr == 0xFFB104:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_read_expr, inst)
+
+    if  addr == 0xFFD232:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_read_expr, inst)
 
 def mem_write_hook(s):
@@ -67,12 +105,29 @@ def mem_write_hook(s):
     if not addr.concrete:
         return
     addr = addr.args[0]
-    if (addr&0x7ffe0000) != 0x7ffe0000:
+    if True or (addr&0x7ffe0000) != 0x7ffe0000:
         addrs.add(addr)
         ins_addr = s.regs.ip.args[0]
         inst = proj.factory.block(addr=ins_addr).capstone.insns[0]
         print 'Write addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_write_expr, inst)
+
+    if  addr == 0x199400:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_write_expr, inst)
+
+    if  addr == 0x19AC68:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_write_expr, inst)
+
+    if  addr == 0xFFB104:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_write_expr, inst)
+
+    if  addr == 0xFFD232:
+        print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
+                s.inspect.mem_write_expr, inst)
+
 
 def nop_hook(s):
     pass
@@ -102,7 +157,18 @@ s.inspect.b('mem_write', when=angr.BP_BEFORE, action=mem_write_hook)
 simgr = proj.factory.simgr(s)
 #r = simgr.explore(find=0x674)
 #r = simgr.explore(find=0x16c)
-r = simgr.explore(find=END, num_find=1)
+r = simgr.explore(find=END, num_find=20)
+
+for save in r.found:
+#added later for syscall vals
+#    print r.found
+#    print r.found[0]
+#    save =r.found[0]
+    print 'printing register r0', save.regs.r0
+    print 'printing register r1', save.regs.r1
+    print 'printing register r2', save.regs.r2
+    print 'printing register r3', save.regs.r3
+
 
 print map(hex, addrs)
 
