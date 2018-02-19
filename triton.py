@@ -61,6 +61,26 @@ END = BASE+0x894
 #check third syscall
 #END = BASE+0x8
 
+print''
+print ''
+print '######## ########  #### ########  #######  ##    ##                    '
+print '   ##    ##     ##  ##     ##    ##     ## ###   ##                    '
+print '   ##    ##     ##  ##     ##    ##     ## ####  ##                    '
+print '   ##    ########   ##     ##    ##     ## ## ## ##                    '
+print '   ##    ##   ##    ##     ##    ##     ## ##  ####                    '
+print '   ##    ##    ##   ##     ##    ##     ## ##   ###                    '
+print '   ##    ##     ## ####    ##     #######  ##    ##                    '
+print ' ######  ##    ## ##     ## ########   #######  ##       ####  ######  '
+print '##    ##  ##  ##  ###   ### ##     ## ##     ## ##        ##  ##    ## '
+print '##         ####   #### #### ##     ## ##     ## ##        ##  ##       '
+print ' ######     ##    ## ### ## ########  ##     ## ##        ##  ##       '
+print '      ##    ##    ##     ## ##     ## ##     ## ##        ##  ##       '
+print '##    ##    ##    ##     ## ##     ## ##     ## ##        ##  ##    ## '
+print ' ######     ##    ##     ## ########   #######  ######## ####  ######  '
+print ''
+print ''
+
+
 addrs = set()
 merged_payload = load_bins('../Tribin/inject.bin', '../Tribin/imain.bin')
 loader = cle.loader.Loader(merged_payload, main_opts={
