@@ -25,11 +25,11 @@ BASE = 0x10000000
 #START = BASE
 
 #MainRoutine in inject.bin
-#START = BASE+0x678
+START = BASE+0x678
 
 
 #imain mainroutine
-START = BASE+0x844
+#START = BASE+0x844
 
 
 #imain END
@@ -85,18 +85,22 @@ def mem_read_hook(s):
                 s.inspect.mem_read_expr, inst)
 
     if  addr == 0x199400:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Read!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_read_expr, inst)
 
     if  addr == 0x19AC68:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Read!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_read_expr, inst)
 
     if  addr == 0xFFB104:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Read!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_read_expr, inst)
 
     if  addr == 0xFFD232:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Read!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_read_expr, inst)
 
@@ -113,18 +117,22 @@ def mem_write_hook(s):
                 s.inspect.mem_write_expr, inst)
 
     if  addr == 0x199400:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Write!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_write_expr, inst)
 
     if  addr == 0x19AC68:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Write!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_write_expr, inst)
 
     if  addr == 0xFFB104:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Write!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_write_expr, inst)
 
     if  addr == 0xFFD232:
+        print('\x1b[6;30;42m' + 'Tirconex Mem Write!' + '\x1b[0m')
         print 'Special Memory Read addr=0x{:x}, value={}\t{}'.format(addr,
                 s.inspect.mem_write_expr, inst)
 
@@ -157,7 +165,8 @@ s.inspect.b('mem_write', when=angr.BP_BEFORE, action=mem_write_hook)
 simgr = proj.factory.simgr(s)
 #r = simgr.explore(find=0x674)
 #r = simgr.explore(find=0x16c)
-r = simgr.explore(find=END, num_find=20)
+#number of path to search
+r = simgr.explore(find=END, num_find=200)
 
 for save in r.found:
 #added later for syscall vals
