@@ -89,6 +89,6 @@ while worker:
             g.add_node(nid, label="...")
         nid+=1
         g.add_edge(p_nid, c_nid)
-
-write_dot(g, "/tmp/xx.dot")
+#writing Triton Control-Flow Graph to a dot file
+write_dot(g, "/Users/ali/Triton-Symbolic/TritonCFG.dot")
 
