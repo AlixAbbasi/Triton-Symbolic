@@ -94,7 +94,7 @@ proj = angr.Project(loader)
 
 
 
-#create buffer for Triton network payload
+#create buffer for Triton network payload. Will finish it in the next variant.
 s = proj.factory.blank_state()
 #s.memory.store(0x4000, 0x0123456789abcdef0123456789abcdef)
 s.memory.store(0x4000, s.solver.BVV(0xAAAABBBBCCCCDDDD, 32))
