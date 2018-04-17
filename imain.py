@@ -6,6 +6,26 @@ import archinfo
 from networkx import DiGraph
 from networkx.drawing.nx_pydot import write_dot
 
+print''
+print ''
+print '######## ########  #### ########  #######  ##    ##                    '
+print '   ##    ##     ##  ##     ##    ##     ## ###   ##                    '
+print '   ##    ##     ##  ##     ##    ##     ## ####  ##                    '
+print '   ##    ########   ##     ##    ##     ## ## ## ##                    '
+print '   ##    ##   ##    ##     ##    ##     ## ##  ####                    '
+print '   ##    ##    ##   ##     ##    ##     ## ##   ###                    '
+print '   ##    ##     ## ####    ##     #######  ##    ##                    '
+print ' ######  ##    ## ##     ## ########   #######  ##       ####  ######  '
+print '##    ##  ##  ##  ###   ### ##     ## ##     ## ##        ##  ##    ## '
+print '##         ####   #### #### ##     ## ##     ## ##        ##  ##       '
+print ' ######     ##    ## ### ## ########  ##     ## ##        ##  ##       '
+print '      ##    ##    ##     ## ##     ## ##     ## ##        ##  ##       '
+print '##    ##    ##    ##     ## ##     ## ##     ## ##        ##  ##    ## '
+print ' ######     ##    ##     ## ########   #######  ######## ####  ######  '
+print ''
+print ''
+print('\x1b[6;30;42m' + '..:: TRITON Symbolic by Ali Abbasi ::..' + '\x1b[0m')
+
 
 proj = angr.Project("../bin/imain.bin", load_options={
     'main_opts':{
